@@ -1,11 +1,10 @@
 #include "0x1_main.h"
 
 /**
- * main -
- * @c:
- * @argv:
- * @env:
- * Return:
+ * main - Entry point for shell terminal
+ * @c: count
+ * @argv: For adding arguement variable
+ * Return: Always zero if successful
 */
 int main(int c, char **argv)
 {
