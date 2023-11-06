@@ -1,16 +1,16 @@
 #include "0x1_main.h"
 
 /**
- * main - Entry point for shell terminal
- * @c: count
- * @argv: For adding arguement variable
- * Return: Always zero if successful
-*/
+ * main - Entry point for my Shell program
+ * @c: Counts arguments but typecasted (not used) for now
+ * @argv: Argument variable, gets the name of my shell
+ *        program for use in my error function
+ * Return: Always 0 (Success), my Shell is perfect
+ */
 int main(int c, char **argv)
 {
-	ssize_t num_char;
 	size_t buffsize = 0;
-	char *buffer = NULL, *my_token[1], *err_name = argv[0];
+	char *buffer = NULL, *my_token[1], *program_name = argv[0];
 	(void)c;
 
 	while (1)
@@ -19,13 +19,8 @@ int main(int c, char **argv)
 		if (isatty(STDIN_FILENO))
 			print_str(STDOUT_FILENO, "$ ");
 
-		/* Collects Input from Users & handles EOF */
-		num_char = getline(&buffer, &buffsize, stdin);
-		if (num_char == -1)
-		{
-			free(buffer);
-			exit(EXIT_SUCCESS);
-		}
+		/* Collects Input from Users */
+		_getline(&buffer, &buffsize);
 
 		/* Splits Inputs into tokens */
 		tokenize(buffer, my_token);
@@ -33,10 +28,10 @@ int main(int c, char **argv)
 			continue;
 
 		/* Create Child Process */
-		_fork(err_name, my_token, environ);
+		_fork(program_name, my_token);
 
 		/* Handles the loop in pere_error() */
-		pere_error(err_name, NULL, 0);
+		pere_error(program_name, NULL, 0);
 	}
 	free(buffer);
 

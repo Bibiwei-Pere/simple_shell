@@ -1,13 +1,14 @@
 #include "0x1_main.h"
 
 /**
- * pere_error -
- * @err_name:
- * @my_token:
- * @err_num:
- * Return:
-*/
-int pere_error(char *err_name, char **my_token, int err_num)
+ * pere_error - Displays error msg. Called in main(),
+ *              _fork() & execute_command()
+ * @program_name: Name of Shell program after compiling (./hsh, ./a.out etc)
+ * @my_token: Stores the address of the input
+ * @err_num: Specific numbers for the different error msgs
+ * Return: Always -1 (EXIT_FAILURE) if successful
+ */
+int pere_error(char *program_name, char **my_token, int err_num)
 {
 	static int i = 1;
 
@@ -18,7 +19,7 @@ int pere_error(char *err_name, char **my_token, int err_num)
 	/* Prints the program name and error number to stderr*/
 	if (err_num)
 	{
-		print_str(STDERR_FILENO, err_name);
+		print_str(STDERR_FILENO, program_name);
 		print_str(STDERR_FILENO, ": ");
 		print_int(2, i);
 	}
